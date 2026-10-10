@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Flipkart — Online Shopping{% endblock %}
+
+{% block extra_css %}
+  .hero-section{max-width:1240px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .banner{height:200px;border-radius:8px;padding:20px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.1);cursor:pointer}
+  .banner h3{font-size:22px;margin-bottom:8px}
+  .banner p{font-size:14px;opacity:.9}
+  .banner .badge{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.2);padding:4px 8px;border-radius:4px;font-size:10px;font-weight:bold}
+  .banner .ad-tag{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);padding:2px 6px;border-radius:2px;font-size:10px}
+  .banner-oppo{background:linear-gradient(135deg,#ff6b35,#f7931e)}
+  .banner-vivo{background:linear-gradient(135deg,#2b2b2b,#4a4a4a)}
+  .banner-puma{background:linear-gradient(135deg,#1a237e,#283593)}
+
+  .carousel-section{max-width:1240px;margin:20px auto;padding:16px;background:var(--fk-dark-blue);border-radius:8px;position:relative}
+  .carousel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .carousel-header h2{color:#fff;font-size:20px;font-weight:600}
+  .carousel-wrapper{position:relative;overflow:hidden}
+  .carousel-track{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:8px}
+  .carousel-track::-webkit-scrollbar{display:none}
+  .carousel-card{min-width:180px;background:#e1f0ff;border-radius:8px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s}
+  .carousel-card:hover{transform:translateY(-4px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .carousel-img{font-size:56px;margin-bottom:12px;height:80px;display:flex;align-items:center;justify-content:center}
+  .carousel-price{font-size:16px;font-weight:700;color:var(--fk-blue)}
+  .carousel-name{font-size:13px;color:var(--fk-text);margin-top:4px;font-weight:500}
+  .carousel-arrow{position:absolute;right:0;top:50%;transform:translateY(-50%);background:#fff;border:none;width:36px;height:36px;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;z-index:10}
+  .carousel-arrow:hover{background:#f0f0f0}
+  @media (max-width:900px){.hero-section{grid-template-columns:1fr}}
+{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+  <div class="banner banner-oppo">
+    <div class="badge">The Big Billion Days</div>
+    <h3>OPPO K14x 5G</h3>
+    <p>From ₹16,999*</p>
+    <p style="font-size:12px;margin-top:4px">Lowest price ever!</p>
+    <div class="ad-tag">AD</div>
+  </div>
+  <div class="banner banner-vivo">
+    <div class="badge">The Big Billion Days</div>
+    <h3>vivo T5x 5G</h3>
+    <p>Sale is live</p>
+    <p style="font-size:12px;margin-top:4px">Segment's biggest battery</p>
+    <div class="ad-tag">AD</div>
+  </div>
+  <div class="banner banner-puma">
+    <div class="badge">The Big Billion Days</div>
+    <h3>Sports shoes &amp; more</h3>
+    <p>Min. 70% Off</p>
+    <p style="font-size:12px;margin-top:4px">PUMA, ADIDAS...</p>
+    <div class="ad-tag">AD</div>
+  </div>
+</div>
+
+<div class="carousel-section">
+  <div class="carousel-header"><h2>Top deals on tech</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track1">
+      {% for item in top_deals %}
+      <a href="/category/electronics" class="carousel-card">
+        <div class="carousel-img" style="background:{{ item.bg }};border-radius:50%;width:80px;height:80px">{{ item.img }}</div>
+        <div class="carousel-price">From ₹{{ item.price }}*</div>
+        <div class="carousel-name">{{ item.name }}</div>
+      </a>
+      {% endfor %}
+    </div>
+    <button class="carousel-arrow" onclick="scrollRight('track1')">❯</button>
+  </div>
+</div>
+
+<div class="carousel-section">
+  <div class="carousel-header"><h2>Bestsellers of the sale</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track2">
+      {% for item in bestsellers %}
+      <a href="/category/home" class="carousel-card">
+        <div class="carousel-img" style="background:{{ item.bg }};border-radius:50%;width:80px;height:80px">{{ item.img }}</div>
+        <div class="carousel-price">From ₹{{ item.price }}*</div>
+        <div class="carousel-name">{{ item.name }}</div>
+      </a>
+      {% endfor %}
+    </div>
+    <button class="carousel-arrow" onclick="scrollRight('track2')">❯</button>
+  </div>
+</div>
+
+<script>
+  function scrollRight(id){document.getElementById(id).scrollBy({left:300,behavior:'smooth'})}
+</script>
+{% endblock %}

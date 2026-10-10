@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{% block title %}Flipkart{% endblock %}</title>
+<style>
+  :root{
+    --fk-blue:#2874f0;
+    --fk-dark-blue:#1c2c5b;
+    --fk-yellow:#ffe11b;
+    --fk-orange:#ff9f00;
+    --fk-bg:#f1f3f6;
+    --fk-text:#212121;
+    --fk-muted:#878787;
+    --fk-green:#388e3c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto','Segoe UI',Arial,sans-serif}
+  body{background:var(--fk-bg);color:var(--fk-text);-webkit-font-smoothing:antialiased}
+  a{text-decoration:none;color:inherit}
+
+  /* HEADER */
+  header{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
+  .header-top{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .header-left{display:flex;align-items:center;gap:16px}
+  .logo{background:var(--fk-yellow);padding:6px 16px;border-radius:4px;display:flex;flex-direction:column;align-items:center;font-style:italic;cursor:pointer;color:var(--fk-blue)}
+  .logo .brand{font-weight:700;font-size:20px;line-height:1}
+  .logo .plus{font-size:10px;font-weight:600;margin-top:2px}
+  .travel-btn{background:#f0f0f0;padding:8px 16px;border-radius:4px;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;cursor:pointer}
+  .header-center{flex:1;max-width:600px;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--fk-muted)}
+  .header-center a{color:var(--fk-blue);font-weight:600}
+  .header-right{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:500}
+  .header-right .item{display:flex;align-items:center;gap:6px;cursor:pointer}
+
+  /* SEARCH */
+  .header-search{border-top:1px solid #e0e0e0;padding:8px 16px}
+  .search-container{max-width:1240px;margin:0 auto;position:relative}
+  .search-container input{width:100%;padding:12px 16px 12px 44px;border:1px solid #e0e0e0;border-radius:4px;font-size:14px;outline:none;background:#f8f8f8;transition:border-color .2s}
+  .search-container input:focus{border-color:var(--fk-blue);background:#fff}
+  .search-container .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fk-muted)}
+
+  /* NAV */
+  .nav-strip{background:#fff;border-top:1px solid #f0f0f0;border-bottom:1px solid #e0e0e0;overflow-x:auto;scrollbar-width:none}
+  .nav-strip::-webkit-scrollbar{display:none}
+  .nav-inner{max-width:1240px;margin:0 auto;display:flex;gap:28px;padding:12px 16px;justify-content:center}
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--fk-muted);white-space:nowrap;cursor:pointer;padding-bottom:4px;border-bottom:3px solid transparent;transition:color .15s}
+  .nav-item:hover{color:var(--fk-blue)}
+  .nav-item.active{color:var(--fk-blue);font-weight:600;border-bottom:3px solid var(--fk-blue)}
+  .nav-item .icon{font-size:20px}
+
+  /* FOOTER */
+  footer{background:#172337;color:#b9c2d0;margin-top:40px;padding:40px 16px 20px;font-size:13px}
+  .footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px}
+  .footer-col h4{color:#7f8fa6;font-size:12px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+  .footer-col a{display:block;margin-bottom:8px;color:#d3dae5}
+  .footer-col a:hover{color:#fff}
+  .footer-bottom{max-width:1240px;margin:20px auto 0;padding-top:20px;border-top:1px solid #2c3a52;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#8d99ab}
+  .footer-bottom strong{color:var(--fk-yellow);font-style:italic}
+
+  @media (max-width:900px){
+    .header-center{display:none}
+    .header-right .hide-sm{display:none}
+    .nav-inner{justify-content:flex-start}
+  }
+  {% block extra_css %}{% endblock %}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="header-left">
+      <a href="/" class="logo">
+        <div class="brand">Flipkart</div>
+        <div class="plus">Explore <b>Plus</b> ✦</div>
+      </a>
+      <div class="travel-btn"><span>✈️</span> Travel</div>
+    </div>
+    <div class="header-center">
+      <span>📍 Location not set</span>
+      <a href="#">Select delivery location ></a>
+    </div>
+    <div class="header-right">
+      <div class="item">Login ▾</div>
+      <div class="item hide-sm">More ▾</div>
+      <div class="item">🛒 Cart</div>
+    </div>
+  </div>
+
+  <div class="header-search">
+    <form class="search-container" action="/search" method="get">
+      <span class="search-icon">🔍</span>
+      <input type="text" name="q" placeholder="Search for Products, Brands and More"
+             value="{{ query if query else '' }}" />
+    </form>
+  </div>
+
+  <nav class="nav-strip">
+    <div class="nav-inner">
+      <a href="/" class="nav-item {% if active == 'foryou' %}active{% endif %}">
+        <span class="icon">🏠</span> For You
+      </a>
+      {% for slug, cat in categories.items() %}
+        <a href="/category/{{ slug }}"
+           class="nav-item {% if active == slug %}active{% endif %}">
+          <span class="icon">{{ cat.icon }}</span> {{ cat.title }}
+        </a>
+      {% endfor %}
+    </div>
+  </nav>
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#">Contact Us</a><a href="#">About Us</a>
+      <a href="#">Careers</a><a href="#">Press</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="#">Payments</a><a href="#">Shipping</a>
+      <a href="#">Cancellation & Returns</a><a href="#">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Consumer Policy</h4>
+      <a href="#">Return Policy</a><a href="#">Terms of Use</a>
+      <a href="#">Security</a><a href="#">Privacy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Mail Us</h4>
+      <a href="#">Flipkart Internet Pvt Ltd,</a>
+      <a href="#">Embassy Tech Village,</a>
+      <a href="#">Bengaluru, Karnataka 560103</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 <strong>Flipkart</strong> Clone — Demo Application</span>
+    <span>Served by Flask + Gunicorn 🐳</span>
+  </div>
+</footer>
+
+</body>
+</html>
